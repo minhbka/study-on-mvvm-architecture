@@ -3,10 +3,15 @@ package com.minhbka.studyonmvvmarchitecture.ui.auth
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.minhbka.studyonmvvmarchitecture.R
 import com.minhbka.studyonmvvmarchitecture.util.toast
 import com.minhbka.studyonmvvmarchitecture.databinding.ActivityLoginBinding
+import com.minhbka.studyonmvvmarchitecture.util.hide
+import com.minhbka.studyonmvvmarchitecture.util.show
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), AuthListenner {
 
@@ -22,14 +27,22 @@ class LoginActivity : AppCompatActivity(), AuthListenner {
     }
 
     override fun onStarted() {
-        toast("Login Started")
+
+        progress_bar.show()
     }
 
-    override fun onSuccess() {
-        toast("Login Successes")
+    override fun onSuccess(loginResponse: LiveData<String>) {
+
+        loginResponse.observe(this, Observer {
+            progress_bar.hide()
+            toast(it)
+        })
+        
     }
 
     override fun onFailure(message: String) {
-        toast("Login Failed")
+
+        toast(message)
+        progress_bar.hide()
     }
 }

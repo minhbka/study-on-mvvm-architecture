@@ -2,6 +2,7 @@ package com.minhbka.studyonmvvmarchitecture.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.minhbka.studyonmvvmarchitecture.repository.UserRepository
 
 // use for both login and signup activity
 class AuthViewModel : ViewModel(){
@@ -18,7 +19,7 @@ class AuthViewModel : ViewModel(){
             return
         }
         // success
-        authListenner?.onSuccess()
-
+        val loginResponse = UserRepository().userLogin(email!!, password!!)
+        authListenner?.onSuccess(loginResponse)
     }
 }
