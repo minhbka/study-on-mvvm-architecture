@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity(), AuthListenner {
             progress_bar.hide()
             toast(it)
         })
-        
+
     }
 
     override fun onFailure(message: String) {
