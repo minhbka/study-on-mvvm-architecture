@@ -73,15 +73,20 @@ class AuthViewModel(
 
         if (name.isNullOrEmpty()){
             authListener?.onFailure("Name is required")
+            return
         }
         if (email.isNullOrEmpty()){
             authListener?.onFailure("Email is required")
+            return
         }
         if (password.isNullOrEmpty()){
             authListener?.onFailure("Password is required")
+            return
         }
         if (password != passwordconfirm){
             authListener?.onFailure("Password did not match")
+            return
+
         }
 
         // success

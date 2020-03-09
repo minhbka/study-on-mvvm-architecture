@@ -2,6 +2,7 @@ package com.minhbka.studyonmvvmarchitecture
 
 import android.app.Application
 import com.minhbka.studyonmvvmarchitecture.data.db.AppDatabase
+import com.minhbka.studyonmvvmarchitecture.data.preferences.PreferenceProvider
 import com.minhbka.studyonmvvmarchitecture.network.MyApi
 import com.minhbka.studyonmvvmarchitecture.network.NetworkConnectionInterceptor
 import com.minhbka.studyonmvvmarchitecture.repository.QuotesRepository
@@ -29,8 +30,8 @@ class MVVMApplication:Application(), KodeinAware {
         bind() from provider { AuthViewModelFactory(instance()) }
 
         bind() from provider { ProfileViewModelFactory(instance()) }
-
-        bind() from singleton { QuotesRepository(instance(), instance()) }
+        bind() from singleton { PreferenceProvider(instance()) }
+        bind() from singleton { QuotesRepository(instance(), instance(), instance()) }
         bind() from provider { QuotesViewModelFactory(instance()) }
     }
 
