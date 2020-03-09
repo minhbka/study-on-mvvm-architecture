@@ -3,6 +3,7 @@ package com.minhbka.studyonmvvmarchitecture.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.minhbka.studyonmvvmarchitecture.repository.UserRepository
+import com.minhbka.studyonmvvmarchitecture.util.ApiException
 import com.minhbka.studyonmvvmarchitecture.util.Coroutines
 
 // use for both login and signup activity
@@ -22,13 +23,19 @@ class AuthViewModel : ViewModel(){
         // success
 
         Coroutines.main{
-            val response = UserRepository().userLogin(email!!, password!!)
-            if (response.isSuccessful){
-                authListener?.onSuccess(response.body()?.user!!)
+            try {
+                val authResponse = UserRepository().userLogin(email!!, password!!)
+                authResponse.user?.let {
+                    authListener?.onSuccess(it)
+                    return@main
+                }
+                authListener?.onFailure(authResponse.message!!)
             }
-            else{
-                authListener?.onFailure("Error Code: ${response.code()}")
+            catch (e:ApiException){
+                authListener?.onFailure(e.message!!)
             }
+
+
         }
 
     }
