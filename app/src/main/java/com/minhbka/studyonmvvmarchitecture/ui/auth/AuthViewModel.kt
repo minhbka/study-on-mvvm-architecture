@@ -3,23 +3,33 @@ package com.minhbka.studyonmvvmarchitecture.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.minhbka.studyonmvvmarchitecture.repository.UserRepository
+import com.minhbka.studyonmvvmarchitecture.util.Coroutines
 
 // use for both login and signup activity
 class AuthViewModel : ViewModel(){
 
     var email:String? = null
     var password:String? = null
-    var authListenner:AuthListenner? = null
+    var authListener:AuthListener? = null
     // important: input view as parameter for onclick function
     fun onLoginButtonClick(view:View){
-        authListenner?.onStarted()
+        authListener?.onStarted()
         if (email.isNullOrEmpty() || password.isNullOrEmpty()){
             // failed
-            authListenner?.onFailure("Invalid email or Password")
+            authListener?.onFailure("Invalid email or Password")
             return
         }
         // success
-        val loginResponse = UserRepository().userLogin(email!!, password!!)
-        authListenner?.onSuccess(loginResponse)
+
+        Coroutines.main{
+            val response = UserRepository().userLogin(email!!, password!!)
+            if (response.isSuccessful){
+                authListener?.onSuccess(response.body()?.user!!)
+            }
+            else{
+                authListener?.onFailure("Error Code: ${response.code()}")
+            }
+        }
+
     }
 }

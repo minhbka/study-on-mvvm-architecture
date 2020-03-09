@@ -7,13 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.minhbka.studyonmvvmarchitecture.R
+import com.minhbka.studyonmvvmarchitecture.data.entities.User
 import com.minhbka.studyonmvvmarchitecture.util.toast
 import com.minhbka.studyonmvvmarchitecture.databinding.ActivityLoginBinding
 import com.minhbka.studyonmvvmarchitecture.util.hide
 import com.minhbka.studyonmvvmarchitecture.util.show
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity(), AuthListenner {
+class LoginActivity : AppCompatActivity(), AuthListener {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +24,7 @@ class LoginActivity : AppCompatActivity(), AuthListenner {
         val viewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
 
         binding.viewmodel = viewModel
-        viewModel.authListenner = this
+        viewModel.authListener = this
     }
 
     override fun onStarted() {
@@ -31,18 +32,16 @@ class LoginActivity : AppCompatActivity(), AuthListenner {
         progress_bar.show()
     }
 
-    override fun onSuccess(loginResponse: LiveData<String>) {
+    override fun onSuccess(user: User) {
 
-        loginResponse.observe(this, Observer {
-            progress_bar.hide()
-            toast(it)
-        })
+        progress_bar.hide()
+        toast("${user.name} is Logged In")
 
     }
 
     override fun onFailure(message: String) {
-
-        toast(message)
         progress_bar.hide()
+        toast(message)
+
     }
 }
