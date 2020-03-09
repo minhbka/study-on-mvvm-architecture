@@ -4,10 +4,12 @@ import android.app.Application
 import com.minhbka.studyonmvvmarchitecture.data.db.AppDatabase
 import com.minhbka.studyonmvvmarchitecture.network.MyApi
 import com.minhbka.studyonmvvmarchitecture.network.NetworkConnectionInterceptor
+import com.minhbka.studyonmvvmarchitecture.repository.QuotesRepository
 import com.minhbka.studyonmvvmarchitecture.repository.UserRepository
 import com.minhbka.studyonmvvmarchitecture.ui.auth.AuthViewModelFactory
 import com.minhbka.studyonmvvmarchitecture.ui.home.profile.ProfileViewModel
 import com.minhbka.studyonmvvmarchitecture.ui.home.profile.ProfileViewModelFactory
+import com.minhbka.studyonmvvmarchitecture.ui.home.quotes.QuotesViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -27,6 +29,9 @@ class MVVMApplication:Application(), KodeinAware {
         bind() from provider { AuthViewModelFactory(instance()) }
 
         bind() from provider { ProfileViewModelFactory(instance()) }
+
+        bind() from singleton { QuotesRepository(instance(), instance()) }
+        bind() from provider { QuotesViewModelFactory(instance()) }
     }
 
 }
