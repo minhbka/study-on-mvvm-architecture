@@ -6,6 +6,8 @@ import com.minhbka.studyonmvvmarchitecture.network.MyApi
 import com.minhbka.studyonmvvmarchitecture.network.NetworkConnectionInterceptor
 import com.minhbka.studyonmvvmarchitecture.repository.UserRepository
 import com.minhbka.studyonmvvmarchitecture.ui.auth.AuthViewModelFactory
+import com.minhbka.studyonmvvmarchitecture.ui.home.profile.ProfileViewModel
+import com.minhbka.studyonmvvmarchitecture.ui.home.profile.ProfileViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -23,6 +25,8 @@ class MVVMApplication:Application(), KodeinAware {
         bind() from singleton { AppDatabase(instance()) }
         bind() from singleton { UserRepository(instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
+
+        bind() from provider { ProfileViewModelFactory(instance()) }
     }
 
 }
