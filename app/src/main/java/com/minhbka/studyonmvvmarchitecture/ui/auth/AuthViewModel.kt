@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.minhbka.studyonmvvmarchitecture.repository.UserRepository
 import com.minhbka.studyonmvvmarchitecture.util.ApiException
 import com.minhbka.studyonmvvmarchitecture.util.Coroutines
+import com.minhbka.studyonmvvmarchitecture.util.NoInternetException
 
 // use for both login and signup activity
 class AuthViewModel(
@@ -38,6 +39,9 @@ class AuthViewModel(
                 authListener?.onFailure(authResponse.message!!)
             }
             catch (e:ApiException){
+                authListener?.onFailure(e.message!!)
+            }
+            catch (e:NoInternetException){
                 authListener?.onFailure(e.message!!)
             }
 
