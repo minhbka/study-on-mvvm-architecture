@@ -8,6 +8,6 @@
               android:name="com.minhbka.studyonmvvmarchitecture.ui.home.profile.ProfileFragment"
               android:label="Profile" tools:layout="@layout/profile_fragment"/>
     <fragment android:id="@+id/quotesFragment"
-              android:name="com.minhbka.studyonmvvmarchitecture.ui.home.profile.ProfileFragment"
+              android:name="com.minhbka.studyonmvvmarchitecture.ui.home.quotes.QuotesFragment"
               android:label="Quotes" tools:layout="@layout/quotes_fragment"/>
 </navigation>
