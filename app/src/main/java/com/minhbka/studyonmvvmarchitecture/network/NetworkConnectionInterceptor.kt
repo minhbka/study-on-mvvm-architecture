@@ -16,9 +16,7 @@ class NetworkConnectionInterceptor(
         if (!isInternetAvailable()){
             throw NoInternetException("Make sure you have an active data connection")
         }
-
         return chain.proceed(chain.request())
-
     }
 
     private fun isInternetAvailable():Boolean{

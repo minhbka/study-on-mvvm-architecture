@@ -26,7 +26,8 @@ interface MyApi {
     suspend fun userSignup(
         @Field("name") name:String,
         @Field("email") email:String,
-        @Field("password")password: String
+        @Field("password")password: String,
+        @Field("school") school:String = "Hanoi University of Science and Technology"
     ):Response<AuthResponse>
 
     @GET("quotes")
@@ -41,7 +42,7 @@ interface MyApi {
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("https://api.simplifiedcoding.in/course-apis/mvvm/")
+                .baseUrl("http://192.168.219.106/MyApi/public/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MyApi::class.java)
